@@ -1,0 +1,2061 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>吴宇飞 · 个人主页</title>
+
+<style>
+/* ===================================================================
+   ①  配色区 —— 想换整站色调，只改这里的颜色值即可
+   =================================================================== */
+:root{
+  --bg:          #f7f6f3;   /* 页面底色 */
+  --card:        #ffffff;   /* 卡片底色 */
+  --ink:         #1c1f26;   /* 主要文字 */
+  --sub:         #6f7480;   /* 次要文字 */
+  --line:        #e6e2db;   /* 分割线 / 边线 */
+  --accent:      #2f6f6b;   /* 主题色（圆点、日期、标签） */
+  --accent-soft: #e4efee;   /* 主题色的浅色版（头像光圈、标签底） */
+  --maxw:        940px;     /* 内容最大宽度 */
+}
+
+/* ===================================================================
+   ②  基础样式
+   =================================================================== */
+*{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  margin:0;
+  background:var(--bg);
+  color:var(--ink);
+  font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB",
+              "Microsoft YaHei","Helvetica Neue",Arial,sans-serif;
+  font-size:16px;
+  line-height:1.75;
+  -webkit-font-smoothing:antialiased;
+}
+img{display:block;max-width:100%;}
+h1,h2,h3,p,ul,ol{margin:0;}
+ul,ol{padding:0;list-style:none;}
+
+/* 每一屏：手机/电脑都至少铺满一屏高度 */
+.screen{
+  min-height:100vh;
+  min-height:100svh;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  padding:72px 22px;
+}
+.wrap{width:100%;max-width:var(--maxw);margin:0 auto;}
+
+/* ===================================================================
+   ③  第一屏：关于我
+   =================================================================== */
+.hero{
+  background:var(--card);
+  border:1px solid var(--line);
+  border-radius:24px;
+  padding:56px 44px 44px;
+  text-align:center;
+  box-shadow:0 18px 50px rgba(28,31,38,.06);
+}
+
+/* 圆形头像（换图片：改下面 HTML 里 img 的 src；微调取景：改 object-position） */
+.avatar{
+  width:152px;height:152px;
+  margin:0 auto 26px;
+  border-radius:50%;
+  overflow:hidden;
+  background:var(--accent-soft);
+  box-shadow:0 0 0 4px var(--card), 0 0 0 6px var(--accent-soft),
+             0 12px 28px rgba(28,31,38,.12);
+}
+.avatar img{
+  width:100%;height:100%;
+  object-fit:cover;
+  object-position:center top;   /* 证件照取上半部分，人脸更居中 */
+}
+/* 图片加载失败时的替代头像（文字可在下面 content 里改） */
+.avatar.no-img::after{
+  content:"吴";
+  display:flex;align-items:center;justify-content:center;
+  width:100%;height:100%;
+  font-size:54px;font-weight:600;color:var(--accent);
+}
+
+.eyebrow{
+  font-size:12px;letter-spacing:.22em;text-transform:uppercase;
+  color:var(--accent);font-weight:600;margin-bottom:14px;
+}
+.hero h1{
+  font-size:clamp(28px,5vw,40px);
+  font-weight:700;letter-spacing:.02em;line-height:1.3;
+}
+.tagline{
+  margin:14px auto 0;
+  max-width:34em;
+  font-size:clamp(15px,2.3vw,16.5px);
+  color:var(--sub);
+}
+
+/* 一句话资料行：政治面貌 / 现居地 / 学历 */
+.meta{
+  display:flex;flex-wrap:wrap;justify-content:center;
+  gap:8px 22px;margin-top:20px;
+  font-size:13.5px;color:var(--sub);
+}
+.meta li{display:flex;align-items:center;gap:8px;}
+.meta li::before{
+  content:"";width:4px;height:4px;border-radius:50%;
+  background:var(--accent);flex:none;
+}
+
+.hr{
+  width:52px;height:3px;border-radius:3px;
+  background:var(--accent-soft);
+  margin:30px auto 34px;
+}
+
+/* 兴趣 + 目标 两栏 */
+.info-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:30px 44px;
+  text-align:left;
+}
+.info-title{
+  font-size:14px;font-weight:700;letter-spacing:.12em;
+  color:var(--ink);margin-bottom:16px;position:relative;padding-left:14px;
+}
+.info-title::before{
+  content:"";position:absolute;left:0;top:.45em;
+  width:5px;height:5px;border-radius:50%;background:var(--accent);
+}
+/* 兴趣爱好：小标签 */
+.chips{display:flex;flex-wrap:wrap;gap:9px;}
+.chips li{
+  font-size:13.5px;
+  padding:5px 13px;
+  border-radius:999px;
+  background:var(--accent-soft);
+  color:var(--accent);
+  line-height:1.6;
+}
+/* 学习目标：编号列表 */
+.goals li{
+  font-size:14.5px;color:var(--sub);
+  padding-left:26px;position:relative;margin-bottom:10px;
+}
+.goals li::before{
+  content:attr(data-n);
+  position:absolute;left:0;top:.28em;
+  font-size:11px;font-weight:700;color:var(--accent);
+  letter-spacing:.04em;
+}
+.goals li:last-child{margin-bottom:0;}
+/* 初试成绩补充说明 */
+.note{
+  margin-top:16px;padding-top:14px;
+  border-top:1px dashed var(--line);
+  font-size:12.5px;color:var(--sub);line-height:1.9;
+}
+
+/* 技能证书 */
+.certs{
+  margin-top:34px;padding-top:24px;
+  border-top:1px solid var(--line);
+  font-size:12.5px;color:var(--sub);line-height:1.9;
+}
+.certs b{
+  color:var(--ink);font-weight:600;
+  letter-spacing:.12em;margin-right:8px;
+}
+
+/* 向下滚动提示 */
+.scroll-cue{
+  margin-top:26px;
+  font-size:12.5px;letter-spacing:.16em;color:var(--sub);
+  text-align:center;opacity:.85;
+}
+.scroll-cue span{display:inline-block;animation:bob 1.8s ease-in-out infinite;}
+@keyframes bob{0%,100%{transform:translateY(0);}50%{transform:translateY(5px);}}
+
+/* ===================================================================
+   ④  第二屏：我的学习记录（时间线）
+   =================================================================== */
+.sec-head{text-align:center;margin-bottom:52px;}
+.sec-title{
+  font-size:clamp(24px,4vw,32px);font-weight:700;letter-spacing:.02em;
+}
+.sec-sub{margin-top:12px;color:var(--sub);font-size:15px;}
+
+.timeline{position:relative;max-width:720px;margin:0 auto;}
+/* 竖线 */
+.timeline::before{
+  content:"";position:absolute;left:7px;top:10px;bottom:10px;
+  width:2px;background:var(--line);border-radius:2px;
+}
+.tl-item{position:relative;padding-left:44px;padding-bottom:30px;}
+.tl-item:last-child{padding-bottom:0;}
+/* 圆点 */
+.tl-dot{
+  position:absolute;left:0;top:14px;
+  width:16px;height:16px;border-radius:50%;
+  background:var(--accent);
+  box-shadow:0 0 0 5px var(--bg), inset 0 0 0 3px var(--card);
+}
+/* 记录卡片 */
+.tl-body{
+  background:var(--card);
+  border:1px solid var(--line);
+  border-radius:16px;
+  padding:22px 26px;
+  transition:transform .25s ease, box-shadow .25s ease, border-color .25s ease;
+}
+.tl-body:hover{
+  transform:translateY(-3px);
+  border-color:var(--accent-soft);
+  box-shadow:0 14px 34px rgba(28,31,38,.09);
+}
+.tl-date{
+  display:inline-block;
+  font-size:12.5px;font-weight:600;letter-spacing:.12em;
+  color:var(--accent);margin-bottom:8px;
+}
+.tl-title{font-size:18.5px;font-weight:700;letter-spacing:.01em;}
+.tl-desc{margin-top:9px;font-size:14.5px;color:var(--sub);}
+.tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:15px;}
+.tags li{
+  font-size:12px;letter-spacing:.03em;
+  padding:3px 11px;border-radius:999px;
+  border:1px solid var(--line);
+  color:var(--sub);background:#fbfaf8;
+}
+.tl-more{
+  text-align:center;margin-top:38px;
+  font-size:13px;color:var(--sub);letter-spacing:.06em;
+}
+
+/* 页脚 */
+.foot{
+  padding:34px 22px 44px;text-align:center;
+  font-size:12.5px;color:var(--sub);letter-spacing:.06em;
+  border-top:1px solid var(--line);
+  margin-top:40px;
+}
+
+/* ===================================================================
+   ⑤  入场动画（关闭 JS 时内容依然正常显示）
+   =================================================================== */
+.js .reveal{opacity:0;transform:translateY(16px);
+  transition:opacity .7s ease,transform .7s ease;}
+.js .reveal.is-in{opacity:1;transform:none;}
+.js .tl-item.reveal:nth-child(2){transition-delay:.08s;}
+.js .tl-item.reveal:nth-child(3){transition-delay:.16s;}
+.js .tl-item.reveal:nth-child(4){transition-delay:.24s;}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto;}
+  .js .reveal{opacity:1;transform:none;transition:none;}
+  .scroll-cue span{animation:none;}
+}
+
+/* ===================================================================
+   ⑥  响应式：手机端自动改为单栏
+   =================================================================== */
+@media (min-width:1024px){
+  body{scroll-snap-type:y proximity;}
+  .screen{scroll-snap-align:start;}
+}
+@media (max-width:720px){
+  .screen{padding:52px 18px;}
+  .hero{padding:40px 24px 36px;border-radius:20px;}
+  .avatar{width:124px;height:124px;margin-bottom:22px;}
+  .hr{margin:26px auto 28px;}
+  .info-grid{grid-template-columns:1fr;gap:26px;}
+  .meta{gap:6px 18px;font-size:13px;}
+  .certs{margin-top:28px;padding-top:20px;}
+  .sec-head{margin-bottom:36px;}
+  .tl-item{padding-left:36px;}
+  .tl-body{padding:18px 20px;}
+  .tl-title{font-size:17px;}
+}
+/* ===================================================================
+   ⑦  右上角 · 北京天气（数据来自 Open-Meteo，免费、无需 API Key）
+       配色全部复用上面的变量，想改外观只调 --accent / --card / --line
+   =================================================================== */
+.weather{
+  position:fixed;
+  top:18px;right:18px;
+  z-index:50;
+  width:206px;
+  padding:11px 14px 12px;
+  background:var(--card);
+  border:1px solid var(--line);
+  border-radius:16px;
+  box-shadow:0 12px 30px rgba(28,31,38,.07);
+  font-size:13px;line-height:1.4;
+  transition:border-color .25s ease,box-shadow .25s ease;
+}
+.weather:hover{
+  border-color:var(--accent-soft);
+  box-shadow:0 16px 36px rgba(28,31,38,.11);
+}
+/* 第一行：城市 + 观测时间 + 刷新按钮 */
+.w-top{display:flex;align-items:center;gap:8px;}
+.w-dot{flex:0 0 6px;width:6px;height:6px;border-radius:50%;background:var(--accent);}
+.w-city{font-size:12.5px;font-weight:700;letter-spacing:.1em;}
+.w-stamp{margin-left:auto;font-size:11px;color:var(--sub);letter-spacing:.04em;}
+.w-btn{
+  flex:0 0 auto;
+  width:20px;height:20px;padding:0;
+  display:flex;align-items:center;justify-content:center;
+  background:none;border:0;border-radius:50%;
+  color:var(--sub);cursor:pointer;
+  transition:color .2s ease,background .2s ease;
+}
+.w-btn:hover{color:var(--accent);background:var(--accent-soft);}
+.w-btn svg{width:13px;height:13px;}
+.weather.is-loading .w-btn svg{animation:spin .9s linear infinite;}
+@keyframes spin{to{transform:rotate(360deg);}}
+
+/* 第二行：图标 + 温度 + 天气描述 */
+.w-main{display:flex;align-items:center;gap:9px;margin-top:9px;}
+.w-ico{flex:0 0 32px;width:32px;height:32px;color:var(--accent);}
+.w-ico svg{display:block;width:100%;height:100%;}
+.w-temp{font-size:22px;font-weight:700;letter-spacing:.01em;}
+.w-unit{font-size:12px;font-weight:600;color:var(--sub);}
+.w-desc{margin-left:auto;font-size:12.5px;color:var(--sub);}
+
+/* 第三行：最高 / 最低 / 湿度 */
+.w-meta{
+  margin-top:8px;padding-top:8px;
+  border-top:1px solid var(--line);
+  font-size:11px;color:var(--sub);letter-spacing:.02em;
+  white-space:nowrap;
+}
+.weather.is-error .w-ico{opacity:.45;}
+.weather.is-error .w-meta{white-space:normal;}
+
+/* 窄屏：贴在第一屏右上角随页面滚动，避免一直遮住正文 */
+@media (max-width:860px){
+  .weather{position:absolute;top:14px;right:14px;width:auto;min-width:130px;padding:9px 12px;}
+  .w-main{margin-top:6px;gap:7px;}
+  .w-ico{flex-basis:26px;width:26px;height:26px;}
+  .w-temp{font-size:19px;}
+  .w-meta{display:none;}
+  .weather.is-error .w-meta{display:block;}
+}
+@media (prefers-reduced-motion:reduce){
+  .weather.is-loading .w-btn svg{animation:none;}
+}
+
+/* ===================================================================
+   ⑧  第三屏 · 一键去除图片背景
+       配色依旧复用上面的变量；想换按钮颜色只调 --accent 即可
+   =================================================================== */
+.bg-card{
+  background:var(--card);
+  border:1px solid var(--line);
+  border-radius:24px;
+  padding:30px 32px 30px;
+  box-shadow:0 18px 50px rgba(28,31,38,.06);
+}
+
+/* --- 选图区：没选图时是一大块拖拽框，选好后整块收起 --- */
+.drop{
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:6px;
+  min-height:200px;
+  padding:32px 24px;
+  border:2px dashed var(--line);
+  border-radius:18px;
+  background:#fbfaf8;
+  text-align:center;
+  cursor:pointer;
+  outline:none;
+  transition:border-color .22s ease,background .22s ease;
+}
+.drop:hover,.drop:focus-visible{border-color:var(--accent);background:var(--accent-soft);}
+.drop.is-over{border-color:var(--accent);background:var(--accent-soft);border-style:solid;}
+.drop-ico{width:42px;height:42px;color:var(--accent);margin-bottom:6px;}
+.drop-ico svg{display:block;width:100%;height:100%;}
+.drop-t{font-size:16px;font-weight:600;letter-spacing:.02em;}
+.drop-s{font-size:13px;color:var(--sub);}
+/* 把真正的 <input type="file"> 藏起来但保留可访问性 */
+.sr-only{
+  position:absolute;width:1px;height:1px;
+  padding:0;margin:-1px;overflow:hidden;
+  clip:rect(0 0 0 0);white-space:nowrap;border:0;
+}
+
+/* 选好图片后：藏起大框，露出工作区 */
+.bg-work{display:none;}
+.bg-card.is-ready .drop{display:none;}
+.bg-card.is-ready .bg-work{display:block;}
+
+/* --- 文件名那一行 --- */
+.bg-filebar{
+  display:flex;align-items:center;gap:10px;flex-wrap:wrap;
+  padding-bottom:14px;margin-bottom:16px;
+  border-bottom:1px solid var(--line);
+  font-size:13.5px;
+}
+.bg-filebar .dotline{
+  flex:none;width:6px;height:6px;border-radius:50%;background:var(--accent);
+}
+.bg-name{
+  font-weight:600;max-width:22em;
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
+}
+.bg-size{color:var(--sub);font-size:12.5px;}
+.bg-note{color:var(--sub);font-size:12px;}
+/* 「换一张」紧跟在文件名后面：靠右会被右上角固定的天气卡片压住点不到 */
+.linkbtn{
+  padding:0;border:0;background:none;
+  color:var(--accent);font:inherit;font-size:13px;font-weight:600;
+  cursor:pointer;text-decoration:underline;text-underline-offset:3px;
+}
+.linkbtn:hover{opacity:.75;}
+
+/* --- 原图 / 结果 对比 --- */
+.compare{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+.pane{
+  border:1px solid var(--line);
+  border-radius:16px;
+  overflow:hidden;
+  background:#fbfaf8;
+}
+.pane-head{
+  display:flex;align-items:center;gap:8px;
+  padding:9px 14px;
+  border-bottom:1px solid var(--line);
+  font-size:12px;font-weight:600;letter-spacing:.1em;color:var(--sub);
+  background: var(--card);
+}
+.pane-head::before{content:"";width:5px;height:5px;border-radius:50%;background:var(--accent-soft);}
+.pane--out .pane-head::before{background:var(--accent);}
+.pane-body{
+  position:relative;
+  aspect-ratio:4/3;
+  display:flex;align-items:center;justify-content:center;
+  padding:8px;
+}
+.pane-body img{width:100%;height:100%;object-fit:contain;}
+/* 还没出结果时，别让 img 的替代文字（alt）露出来 */
+.pane-body img:not([src]){display:none;}
+/* 结果区铺灰白棋盘格，透明的地方一眼就能看出来 */
+.pane--out .pane-body{
+  background-color:#fff;
+  background-image:
+    linear-gradient(45deg,#efece6 25%,transparent 25%,transparent 75%,#efece6 75%),
+    linear-gradient(45deg,#efece6 25%,transparent 25%,transparent 75%,#efece6 75%);
+  background-size:18px 18px;
+  background-position:0 0,9px 9px;
+}
+.pane-empty{
+  position:absolute;inset:0;
+  display:flex;align-items:center;justify-content:center;
+  font-size:13px;color:var(--sub);letter-spacing:.04em;
+}
+
+/* --- 按钮 --- */
+.bg-actions{
+  display:flex;align-items:center;gap:12px;flex-wrap:wrap;
+  margin-top:20px;
+}
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:9px;
+  padding:12px 28px;
+  border:0;border-radius:999px;
+  background:var(--accent);color:#fff;
+  font:inherit;font-size:15px;font-weight:600;letter-spacing:.04em;
+  cursor:pointer;text-decoration:none;
+  box-shadow:0 8px 20px rgba(47,111,107,.22);
+  transition:transform .2s ease,box-shadow .2s ease,background .2s ease,color .2s ease;
+}
+.btn:hover:not(:disabled){transform:translateY(-2px);box-shadow:0 12px 26px rgba(47,111,107,.28);}
+.btn:disabled{
+  background:#c9cdd2;           /* 处理中：按钮变灰 */
+  color:#fff;
+  cursor:not-allowed;
+  box-shadow:none;
+  transform:none;
+}
+.btn .spin{
+  flex:none;
+  width:15px;height:15px;
+  border-radius:50%;
+  border:2px solid rgba(255,255,255,.45);
+  border-top-color:#fff;
+  animation:spin .8s linear infinite;
+}
+.btn .btn-ico{width:17px;height:17px;}
+/* 处理中：藏起铅笔图标，只留转圈 +「处理中…」 */
+.btn.is-busy .btn-ico{display:none;}
+/* 注意：作者样式里的 display 会盖掉 hidden 属性，所以这两条必须写 */
+.btn[hidden]{display:none;}
+.pane-empty[hidden]{display:none;}
+.btn-ghost{
+  background:transparent;color:var(--accent);
+  border:1px solid var(--accent-soft);
+  box-shadow:none;
+}
+.btn-ghost:hover:not(:disabled){background:var(--accent-soft);box-shadow:none;}
+.btn-ghost svg{width:16px;height:16px;}
+
+/* --- 状态 / 提示文字 --- */
+.status{
+  margin-top:14px;
+  min-height:1.6em;
+  font-size:13.5px;line-height:1.6;color:var(--sub);
+}
+.status.is-ok{color:var(--accent);}
+.status.is-error{color:#b4453b;}
+.status.is-warn{color:#96652a;}
+
+/* 手机端：对比图改成上下排列 */
+@media (max-width:720px){
+  .bg-card{padding:22px 20px;border-radius:20px;}
+  .drop{min-height:170px;padding:26px 18px;}
+  .drop-t{font-size:15px;}
+  .compare{grid-template-columns:1fr;gap:12px;}
+  .pane-body{aspect-ratio:1/1;}
+  .bg-actions{gap:10px;}
+  .btn{flex:1 1 auto;padding:12px 18px;}
+  .bg-name{max-width:100%;}
+}
+@media (prefers-reduced-motion:reduce){
+  .btn .spin{animation:none;}
+}
+
+/* ===================================================================
+   ⑨  第四屏 · AI 文字生成图片（谷歌极简风格）
+       —— 这一屏刻意不跟随上面的暖色主题，改用 Google Material 的
+          白底 + #1a73e8 蓝 + 极细边线 + 胶囊形筛选控件。
+          想整屏换色，只改下面这几个 --g- 变量即可。
+   =================================================================== */
+#imggen{
+  --g-blue:      #1a73e8;   /* Google 蓝：主按钮、选中态 */
+  --g-blue-dark: #1b66c9;   /* 悬停时深一号 */
+  --g-blue-soft: #e8f0fe;   /* 选中 chip 的浅蓝底 */
+  --g-red:       #ea4335;
+  --g-yellow:    #fbbc04;
+  --g-green:     #34a853;
+  --g-ink:       #202124;   /* Google 正文色 */
+  --g-sub:       #5f6368;   /* 次要文字 */
+  --g-line:      #dadce0;   /* 极细边线 */
+  --g-surface:   #ffffff;
+  --g-bg:        #f8f9fa;
+  --g-font:      Roboto,"Google Sans","Helvetica Neue",Arial,
+                 "PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+}
+/* 这一屏里带 hidden 的元素，作者样式会盖掉 hidden 属性，所以统一补一句 */
+#imggen [hidden]{display:none !important;}
+
+#imggen .gi-dots{display:flex;gap:6px;justify-content:center;margin-bottom:16px;}
+#imggen .gi-dots i{display:block;width:8px;height:8px;border-radius:50%;}
+#imggen .gi-dots .c-blue{background:var(--g-blue);}
+#imggen .gi-dots .c-red{background:var(--g-red);}
+#imggen .gi-dots .c-yellow{background:var(--g-yellow);}
+#imggen .gi-dots .c-green{background:var(--g-green);}
+#imggen .eyebrow{color:var(--g-blue);letter-spacing:.18em;}
+#imggen .sec-title{color:var(--g-ink);font-family:var(--g-font);font-weight:500;letter-spacing:-.01em;}
+#imggen .sec-sub{color:var(--g-sub);font-family:var(--g-font);}
+
+/* 一块大白板，装下整屏内容 */
+.gi-shell{
+  font-family:var(--g-font);
+  color:var(--g-ink);
+  background:var(--g-surface);
+  border:1px solid var(--g-line);
+  border-radius:28px;
+  padding:32px 34px 28px;
+  box-shadow:0 1px 2px rgba(60,64,67,.08),0 1px 3px 1px rgba(60,64,67,.06);
+}
+
+/* --- 提示词输入：仿 Google 搜索框，聚焦时浮起 --- */
+.gi-prompt{
+  border:1px solid var(--g-line);
+  border-radius:24px;
+  padding:14px 20px 10px;
+  transition:box-shadow .18s ease,border-color .18s ease;
+}
+.gi-prompt:focus-within{
+  border-color:transparent;
+  box-shadow:0 1px 6px rgba(32,33,36,.28);
+}
+.gi-prompt-top{display:flex;align-items:center;gap:8px;margin-bottom:8px;}
+.gi-prompt-top svg{width:17px;height:17px;flex:none;color:var(--g-blue);}
+.gi-prompt-top span{
+  font-size:11.5px;font-weight:600;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--g-sub);
+}
+.gi-prompt textarea{
+  display:block;width:100%;
+  min-height:52px;max-height:200px;
+  border:0;outline:none;resize:none;
+  background:transparent;color:var(--g-ink);
+  font:inherit;font-size:15px;line-height:1.7;
+  overflow-y:auto;
+}
+.gi-prompt textarea::placeholder{color:#9aa0a6;}
+.gi-count{text-align:right;font-size:11.5px;color:#9aa0a6;line-height:1.4;}
+
+/* --- 参数：胶囊形筛选控件 --- */
+.gi-controls{display:flex;flex-wrap:wrap;gap:16px 34px;margin-top:20px;}
+.gi-group{display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
+.gi-group-name{font-size:12.5px;color:var(--g-sub);letter-spacing:.04em;}
+.gi-chips{display:flex;flex-wrap:wrap;gap:8px;}
+.gi-chip{
+  display:inline-flex;align-items:center;
+  padding:7px 15px;
+  border:1px solid var(--g-line);
+  border-radius:999px;
+  background:var(--g-surface);
+  color:var(--g-sub);
+  font:inherit;font-size:13px;line-height:1.2;
+  cursor:pointer;
+  transition:background .16s ease,border-color .16s ease,color .16s ease;
+}
+.gi-chip:hover{background:#f1f3f4;}
+.gi-chip[aria-pressed="true"]{
+  background:var(--g-blue-soft);
+  border-color:var(--g-blue-soft);
+  color:#1967d2;font-weight:600;
+}
+.gi-chip:focus-visible{outline:2px solid var(--g-blue);outline-offset:2px;}
+
+/* --- 按钮 --- */
+.gi-actions{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-top:24px;}
+.gi-btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:9px;
+  padding:12px 26px;
+  border:0;border-radius:999px;
+  background:var(--g-blue);color:#fff;
+  font:inherit;font-size:14.5px;font-weight:600;letter-spacing:.01em;
+  cursor:pointer;text-decoration:none;
+  box-shadow:0 1px 2px rgba(60,64,67,.2);
+  transition:background .16s ease,box-shadow .16s ease;
+}
+.gi-btn:hover:not(:disabled){
+  background:var(--g-blue-dark);
+  box-shadow:0 1px 3px rgba(60,64,67,.3),0 4px 8px rgba(60,64,67,.15);
+}
+.gi-btn:disabled{
+  background:var(--g-bg);       /* 处理中：按钮变灰 */
+  color:#9aa0a6;
+  cursor:not-allowed;
+  box-shadow:none;
+}
+.gi-btn:focus-visible{outline:2px solid var(--g-blue);outline-offset:2px;}
+.gi-btn svg{width:17px;height:17px;flex:none;}
+.gi-btn.is-busy svg{display:none;}
+.gi-spin{
+  flex:none;width:15px;height:15px;border-radius:50%;
+  border:2px solid rgba(255,255,255,.45);
+  border-top-color:#fff;
+  animation:spin .8s linear infinite;
+}
+.gi-hint{font-size:12.5px;color:var(--g-sub);}
+
+/* --- 结果区 --- */
+.gi-stage{
+  display:flex;align-items:center;justify-content:center;
+  margin-top:22px;
+  min-height:240px;
+  padding:18px;
+  border:1px solid var(--g-line);
+  border-radius:24px;
+  background:var(--g-bg);
+}
+.gi-empty{display:flex;flex-direction:column;align-items:center;gap:8px;text-align:center;}
+.gi-empty svg{width:26px;height:26px;color:#bdc1c6;}
+.gi-empty p{font-size:13.5px;color:var(--g-sub);}
+
+.gi-loading{display:flex;flex-direction:column;align-items:center;gap:14px;}
+.gi-loader{display:flex;gap:9px;}
+.gi-loader i{display:block;width:11px;height:11px;border-radius:50%;animation:gi-bounce 1.25s ease-in-out infinite;}
+.gi-loader i:nth-child(1){background:var(--g-blue);}
+.gi-loader i:nth-child(2){background:var(--g-red);animation-delay:.15s;}
+.gi-loader i:nth-child(3){background:var(--g-yellow);animation-delay:.3s;}
+.gi-loader i:nth-child(4){background:var(--g-green);animation-delay:.45s;}
+@keyframes gi-bounce{
+  0%,80%,100%{transform:translateY(0);opacity:.45;}
+  40%{transform:translateY(-8px);opacity:1;}
+}
+.gi-loading p{font-size:13.5px;color:var(--g-sub);text-align:center;line-height:1.7;}
+
+.gi-grid{display:grid;gap:14px;width:100%;}
+.gi-grid[data-count="1"]{grid-template-columns:1fr;}
+.gi-grid[data-count="2"],
+.gi-grid[data-count="3"],
+.gi-grid[data-count="4"]{grid-template-columns:1fr 1fr;}
+.gi-shot{
+  margin:0;
+  border:1px solid var(--g-line);
+  border-radius:16px;
+  overflow:hidden;
+  background:#fff;
+}
+.gi-shot img{display:block;width:100%;height:auto;}
+.gi-shot-bar{
+  display:flex;align-items:center;justify-content:space-between;gap:10px;
+  padding:9px 13px;
+  border-top:1px solid var(--g-line);
+  font-size:12px;color:var(--g-sub);
+}
+.gi-save{
+  display:inline-flex;align-items:center;gap:6px;
+  padding:2px 4px;border:0;background:none;
+  color:var(--g-blue);font:inherit;font-size:12.5px;font-weight:600;
+  text-decoration:none;cursor:pointer;
+}
+.gi-save:hover{text-decoration:underline;text-underline-offset:3px;}
+.gi-save svg{width:14px;height:14px;}
+
+/* --- 状态文字 + 示例提示词 --- */
+.gi-meta{
+  margin-top:14px;min-height:1.6em;
+  font-size:12.5px;line-height:1.7;color:var(--g-sub);
+  word-break:break-word;
+}
+.gi-meta.is-ok{color:#137333;}
+.gi-meta.is-error{color:var(--g-red);}
+.gi-meta.is-warn{color:#b06000;}
+
+.gi-try{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-top:18px;}
+.gi-try-name{font-size:12.5px;color:var(--g-sub);}
+.gi-try-chip{
+  padding:6px 13px;
+  border:1px solid var(--g-line);
+  border-radius:999px;
+  background:var(--g-surface);
+  color:var(--g-sub);
+  font:inherit;font-size:12.5px;line-height:1.4;
+  cursor:pointer;
+  transition:background .16s ease,border-color .16s ease,color .16s ease;
+}
+.gi-try-chip:hover{background:var(--g-blue-soft);border-color:var(--g-blue-soft);color:#1967d2;}
+
+/* --- 手机端 --- */
+@media (max-width:720px){
+  .gi-shell{padding:22px 18px 20px;border-radius:22px;}
+  .gi-prompt{padding:12px 16px 8px;border-radius:20px;}
+  .gi-controls{gap:14px 22px;margin-top:16px;}
+  .gi-stage{padding:12px;border-radius:18px;min-height:200px;}
+  .gi-grid[data-count="2"],
+  .gi-grid[data-count="3"],
+  .gi-grid[data-count="4"]{grid-template-columns:1fr;}
+  .gi-actions{gap:10px;}
+  .gi-btn{flex:1 1 auto;}
+}
+@media (prefers-reduced-motion:reduce){
+  .gi-spin{animation:none;}
+  .gi-loader i{animation:none;}
+}
+</style>
+</head>
+
+<body>
+
+<!-- ================================================================
+     右上角 · 北京实时天气
+     数据来自 Open-Meteo 免费接口（open-meteo.com，不需要 API Key）
+     想换城市：改页面底部脚本里的 LAT / LON 两个数字即可
+     ================================================================ -->
+<aside class="weather" id="weather" aria-live="polite" aria-label="北京实时天气">
+  <div class="w-top">
+    <span class="w-dot"></span>
+    <span class="w-city">北京</span>
+    <span class="w-stamp" id="w-stamp">加载中</span>
+    <button class="w-btn" id="w-refresh" type="button" title="刷新天气" aria-label="刷新天气">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+           stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M21 12a9 9 0 1 1-3.2-6.9"/>
+        <path d="M21 3.8V10h-6.2"/>
+      </svg>
+    </button>
+  </div>
+  <div class="w-main">
+    <span class="w-ico" id="w-ico" aria-hidden="true"></span>
+    <span class="w-temp" id="w-temp">--</span><span class="w-unit">°C</span>
+    <span class="w-desc" id="w-desc">正在获取</span>
+  </div>
+  <p class="w-meta" id="w-meta">数据来源：Open-Meteo</p>
+</aside>
+
+
+<!-- ================================================================
+     第一屏 · 关于我
+     本屏文字全部取自 吴宇飞简历.pdf，改动时请同步核对简历
+     ================================================================ -->
+<section class="screen" id="about">
+  <div class="wrap">
+    <div class="hero reveal">
+
+      <!-- 头像：换成别的图片，只要改 src；想让脸更靠上/下，调 CSS 里的 object-position -->
+      <div class="avatar">
+        <img src="IMG_3392.JPG" alt="吴宇飞的头像"
+             onerror="this.parentNode.classList.add('no-img');this.remove();">
+      </div>
+
+      <p class="eyebrow">About Me</p>
+      <h1>吴宇飞</h1>
+      <p class="tagline">南京财经大学新闻学（主修）· 金融学（辅修）学士，做过记者、编剧、编导与新媒体运营。</p>
+
+      <!-- 一句话资料行，均出自简历抬头 -->
+      <ul class="meta">
+        <li>中共党员</li>
+        <li>现居内蒙古包头市</li>
+        <li>南京财经大学 · 新闻学 / 金融学</li>
+      </ul>
+
+      <div class="hr"></div>
+
+      <div class="info-grid">
+        <!-- 兴趣爱好：简历里没有这一栏，先用简历中出现过的经历方向代填；
+             换成你自己的说法时，复制/修改下面的 <li>…</li> 即可 -->
+        <section>
+          <h2 class="info-title">兴趣爱好</h2>
+          <ul class="chips">
+            <li>新闻采编写作</li>
+            <li>剧本创作</li>
+            <li>视频编导</li>
+            <li>新媒体运营</li>
+            <li>活动统筹</li>
+            <li>志愿服务</li>
+          </ul>
+        </section>
+
+        <!-- 学习目标：想加一条就复制一行 <li data-n="04">…</li> 并改编号 -->
+        <section>
+          <h2 class="info-title">学习目标</h2>
+          <ol class="goals">
+            <li data-n="01">报考新闻与传播专业硕士，方向为媒体融合与传播实务</li>
+            <li data-n="02">延续新闻学（主修）与金融学（辅修）的复合知识结构</li>
+            <li data-n="03">在媒体融合与传播实务方向继续实践与积累</li>
+          </ol>
+          <p class="note">
+            初试成绩：政治 59 ｜ 英语 85<br>专业课一 126 ｜ 专业课二 121 ｜ 总分 391
+          </p>
+        </section>
+      </div>
+
+      <!-- 技能证书，出自简历「教育背景」 -->
+      <p class="certs"><b>技能证书</b>全国计算机二级 ｜ 普通话二级甲等 ｜ 高中语文教师资格证 ｜ CET-4</p>
+
+    </div>
+    <p class="scroll-cue">向下滚动 <span>↓</span></p>
+  </div>
+</section>
+
+
+<!-- ================================================================
+     第二屏 · 我的学习记录
+     这两条是课程里实际完成的内容，说明文字请按自己的真实情况补充
+     ================================================================ -->
+<section class="screen" id="records">
+  <div class="wrap">
+    <header class="sec-head reveal">
+      <p class="eyebrow">Learning Log</p>
+      <h2 class="sec-title">我的学习记录</h2>
+      <p class="sec-sub">记录每一次从 0 到 1 的尝试，持续更新中。</p>
+    </header>
+
+    <div class="timeline">
+
+      <!-- ▼▼ 新增一条记录：把下面整个 <article class="tl-item">…</article> 复制一份，
+                放在你想要的位置，再改日期、标题、描述和标签即可 ▼▼ -->
+
+      <article class="tl-item reveal">
+        <span class="tl-dot"></span>
+        <div class="tl-body">
+          <time class="tl-date">2026.09</time>
+          <h3 class="tl-title">爬虫抓取</h3>
+          <!-- 下面这句请改成你自己实现时的思路与收获 -->
+          <p class="tl-desc">
+            课程中完成的第一个功能实现 —— 爬虫抓取：让程序自动抓取网页上的数据。
+          </p>
+          <!-- 想加技术标签就复制 <li>…</li> -->
+          <ul class="tags">
+            <li>功能实现</li>
+            <li>数据抓取</li>
+          </ul>
+        </div>
+      </article>
+
+      <article class="tl-item reveal">
+        <span class="tl-dot"></span>
+        <div class="tl-body">
+          <time class="tl-date">2026.09.29</time>
+          <h3 class="tl-title">我的个人主页</h3>
+          <p class="tl-desc">
+            用 HTML 与 CSS 制作的第一个个人网页，分「关于我」「我的学习记录」
+            「一键去除图片背景」「AI 文字生成图片」四屏，手机与电脑上都能正常浏览。
+          </p>
+          <ul class="tags">
+            <li>HTML</li><li>CSS</li><li>响应式布局</li>
+          </ul>
+        </div>
+      </article>
+
+      <article class="tl-item reveal">
+        <span class="tl-dot"></span>
+        <div class="tl-body">
+          <time class="tl-date">2026.09.29</time>
+          <h3 class="tl-title">第一次 API 调用</h3>
+          <p class="tl-desc">
+            第一次让网页主动向外部服务要数据：用 fetch 调用 Open-Meteo 的免费天气接口，
+            把返回的 JSON 解析出来，渲染成页面右上角的实时天气卡片。
+            不用申请 API Key，也第一次明白「数据不在本地，而在别人的服务器上」，
+            所以必须处理加载中、请求失败和网络超时这些情况。
+          </p>
+          <ul class="tags">
+            <li>JavaScript</li><li>fetch</li><li>Open-Meteo</li><li>JSON</li>
+          </ul>
+        </div>
+      </article>
+
+      <article class="tl-item reveal">
+        <span class="tl-dot"></span>
+        <div class="tl-body">
+          <time class="tl-date">2026.09.29</time>
+          <h3 class="tl-title">一键去除图片背景</h3>
+          <!-- 下面这句请按你自己的真实收获改写 -->
+          <p class="tl-desc">
+            第一个需要 API Key 的接口：拖一张图片进来，交给 Replicate 上的 remove-bg 模型，
+            几秒钟后拿回一张透明背景的 PNG，可以下载。
+            过程中也第一次明白「Key 不能放在前端」——网页只跟自己写的本地服务说话，
+            Key 藏在服务端的环境变量里；服务还得会处理「正在处理中」「Key 没配」「图片太大」这些情况。
+          </p>
+          <ul class="tags">
+            <li>Node.js</li><li>Replicate</li><li>环境变量</li><li>拖拽上传</li>
+          </ul>
+        </div>
+      </article>
+
+      <article class="tl-item reveal">
+        <span class="tl-dot"></span>
+        <div class="tl-body">
+          <time class="tl-date">2026.09.29</time>
+          <h3 class="tl-title">AI 文字生成图片</h3>
+          <!-- 下面这句请按你自己的真实收获改写 -->
+          <p class="tl-desc">
+            写一句提示词，让网页把画面「画」出来。用的是 OpenRouter 上的
+            gpt-5.4-image-2，接口返回的是 base64 而不是图片网址，所以不用落盘。
+            Key 和去背景那屏一样藏在服务端；不一样的是这屏「按用量真金白银计费」，
+            快慢和价格差好几倍，页面上就得先把「这一档大概等多久、花多少钱」写清楚，
+            生成时还要显示已经等了多久，不然很容易被当成卡死。
+            界面单独试了一次谷歌的极简风格。
+          </p>
+          <ul class="tags">
+            <li>OpenRouter</li><li>文生图</li><li>base64</li><li>Material 风格</li>
+          </ul>
+        </div>
+      </article>
+
+      <!-- ▲▲ 复制到这里结束 ▲▲ -->
+
+    </div>
+
+    <p class="tl-more">— 下一段记录，正在路上 —</p>
+  </div>
+</section>
+
+
+<!-- ================================================================
+     第三屏 · 一键去除图片背景
+     ⚠️ 这一屏不能直接双击 index.html 使用：它需要一个本地服务来拿
+        Replicate 的 Key（Key 放前端会被盗用）。启动方法见 README.md：
+        在项目文件夹里执行  node server.js
+     ================================================================ -->
+<section class="screen" id="tool">
+  <div class="wrap">
+    <header class="sec-head reveal">
+      <p class="eyebrow">Toolbox</p>
+      <h2 class="sec-title">一键去除图片背景</h2>
+      <p class="sec-sub">
+        上传一张图片，交给 Replicate 上的 remove-bg 模型，几秒钟后得到一张透明背景的 PNG。
+      </p>
+    </header>
+
+    <div class="bg-card reveal" id="bg-card">
+
+      <!-- ① 选图：拖拽或点击。选好之后这块会自动收起，换成下面的工作区 -->
+      <div class="drop" id="bg-drop" role="button" tabindex="0"
+           aria-label="点击选择图片，或把图片拖到这里">
+        <span class="drop-ico" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"
+               stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="4.5" width="18" height="15" rx="3"/>
+            <circle cx="8.4" cy="9.6" r="1.5"/>
+            <path d="M3.4 16.6 8.8 12l3.3 2.9 3.1-2.5 5.4 4.2"/>
+            <path d="M12 1.6v3.4M10.3 3.2 12 1.5l1.7 1.7"/>
+          </svg>
+        </span>
+        <p class="drop-t">把图片拖到这里</p>
+        <p class="drop-s">或点击选择文件 · JPG / PNG / WebP · 单张不超过 12 MB</p>
+      </div>
+      <input type="file" id="bg-file" accept="image/*" class="sr-only" tabindex="-1">
+
+      <!-- ② 工作区：选好图片才出现 -->
+      <div class="bg-work">
+        <div class="bg-filebar">
+          <span class="dotline"></span>
+          <span class="bg-name" id="bg-name">—</span>
+          <span class="bg-size" id="bg-size"></span>
+          <span class="bg-note" id="bg-note"></span>
+          <button class="linkbtn" id="bg-reset" type="button">换一张</button>
+        </div>
+
+        <div class="compare">
+          <div class="pane">
+            <div class="pane-head"><span>原图</span></div>
+            <div class="pane-body"><img id="bg-src" alt="原图预览"></div>
+          </div>
+          <div class="pane pane--out">
+            <div class="pane-head"><span>去背景结果</span></div>
+            <div class="pane-body">
+              <img id="bg-out" alt="去除背景后的图片">
+              <p class="pane-empty" id="bg-empty">结果会显示在这里</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="bg-actions">
+          <button class="btn" id="bg-run" type="button">
+            <svg class="btn-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                 stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M14.6 3.6 20.4 9.4 9.3 20.5l-6.5 1.7 1.7-6.5z"/>
+              <path d="M12.6 5.6l5.8 5.8"/>
+            </svg>
+            <span class="spin" id="bg-spin" hidden></span>
+            <span id="bg-run-text">去除背景</span>
+          </button>
+          <a class="btn btn-ghost" id="bg-download" download hidden>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"
+                 stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M12 3.8v11.4M7.2 10.6 12 15.4l4.8-4.8M4.6 19.8h14.8"/>
+            </svg>
+            下载 PNG
+          </a>
+        </div>
+
+        <p class="status" id="bg-status"></p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ================================================================
+     第四屏 · AI 文字生成图片（谷歌极简风格）
+     ⚠️ 和第三屏一样，这是一个「需要 Key」的功能，不能直接双击 index.html 用。
+        Key 留在服务端的环境变量 OPENROUTER_API_KEY 里，
+        先在项目文件夹执行 node server.js，再访问 http://localhost:8787
+     ================================================================ -->
+<section class="screen" id="imggen">
+  <div class="wrap">
+    <header class="sec-head reveal">
+      <div class="gi-dots" aria-hidden="true">
+        <i class="c-blue"></i><i class="c-red"></i><i class="c-yellow"></i><i class="c-green"></i>
+      </div>
+      <p class="eyebrow">Text to Image</p>
+      <h2 class="sec-title">AI 文字生成图片</h2>
+      <p class="sec-sub">
+        写一句你想要的画面，交给 OpenRouter 上的 gpt-5.4-image-2，等一会儿就能拿到图片。
+      </p>
+    </header>
+
+    <div class="gi-shell reveal" id="gi-shell">
+
+      <!-- ① 提示词：仿 Google 搜索框 -->
+      <div class="gi-prompt">
+        <div class="gi-prompt-top">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"
+               stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M12 3.2 13.7 8.3 18.8 10 13.7 11.7 12 16.8 10.3 11.7 5.2 10 10.3 8.3z"/>
+            <path d="M18.4 15.6 19.2 18l2.4.8-2.4.8-.8 2.4-.8-2.4-2.4-.8 2.4-.8z"/>
+          </svg>
+          <span>描述你想要的画面</span>
+        </div>
+        <label class="sr-only" for="gi-prompt">图片描述（提示词）</label>
+        <textarea id="gi-prompt" rows="2" maxlength="2000" spellcheck="false"
+          placeholder="例如：一只戴着圆框眼镜的橘猫坐在旧书店窗边看书，暖色胶片质感，浅景深"></textarea>
+        <p class="gi-count"><span id="gi-count">0</span> / 2000</p>
+      </div>
+
+      <!-- ② 参数 -->
+      <div class="gi-controls">
+        <div class="gi-group">
+          <span class="gi-group-name">比例</span>
+          <div class="gi-chips" id="gi-aspect" role="group" aria-label="图片比例">
+            <button class="gi-chip" type="button" data-v="1:1"    aria-pressed="true">1:1</button>
+            <button class="gi-chip" type="button" data-v="4:3"    aria-pressed="false">4:3</button>
+            <button class="gi-chip" type="button" data-v="3:4"    aria-pressed="false">3:4</button>
+            <button class="gi-chip" type="button" data-v="16:9"   aria-pressed="false">16:9</button>
+            <button class="gi-chip" type="button" data-v="9:16"   aria-pressed="false">9:16</button>
+          </div>
+        </div>
+
+        <div class="gi-group">
+          <span class="gi-group-name">质量</span>
+          <div class="gi-chips" id="gi-quality" role="group" aria-label="生成质量">
+            <button class="gi-chip" type="button" data-v="low"    aria-pressed="false">快速</button>
+            <button class="gi-chip" type="button" data-v="medium" aria-pressed="true">标准</button>
+            <button class="gi-chip" type="button" data-v="high"   aria-pressed="false">高清</button>
+          </div>
+        </div>
+
+        <div class="gi-group">
+          <span class="gi-group-name">张数</span>
+          <div class="gi-chips" id="gi-n" role="group" aria-label="生成张数">
+            <button class="gi-chip" type="button" data-v="1" aria-pressed="true">1 张</button>
+            <button class="gi-chip" type="button" data-v="2" aria-pressed="false">2 张</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ③ 生成按钮 -->
+      <div class="gi-actions">
+        <button class="gi-btn" id="gi-run" type="button">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"
+               stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M12 3.2 13.7 8.3 18.8 10 13.7 11.7 12 16.8 10.3 11.7 5.2 10 10.3 8.3z"/>
+            <path d="M18.4 15.6 19.2 18l2.4.8-2.4.8-.8 2.4-.8-2.4-2.4-.8 2.4-.8z"/>
+          </svg>
+          <span class="gi-spin" id="gi-spin" hidden></span>
+          <span id="gi-run-text">生成图片</span>
+        </button>
+        <span class="gi-hint" id="gi-hint"></span>
+      </div>
+
+      <!-- ④ 结果区：空态 / 生成中 / 出图 -->
+      <div class="gi-stage">
+        <div class="gi-empty" id="gi-empty">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
+               stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <rect x="3" y="4.5" width="18" height="15" rx="3"/>
+            <circle cx="8.4" cy="9.6" r="1.5"/>
+            <path d="M3.4 16.6 8.8 12l3.3 2.9 3.1-2.5 5.4 4.2"/>
+          </svg>
+          <p>生成的图片会出现在这里</p>
+        </div>
+
+        <div class="gi-loading" id="gi-loading" hidden>
+          <div class="gi-loader" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+          <p id="gi-loading-text">正在生成…</p>
+        </div>
+
+        <div class="gi-grid" id="gi-grid" data-count="1" hidden></div>
+      </div>
+
+      <p class="gi-meta" id="gi-meta" role="status" aria-live="polite"></p>
+
+      <!-- ⑤ 示例提示词：点一下填进输入框 -->
+      <div class="gi-try">
+        <span class="gi-try-name">试试这些：</span>
+        <button class="gi-try-chip" type="button" data-p="一只戴着圆框眼镜的橘猫坐在旧书店窗边看书，暖色胶片质感，浅景深">橘猫与旧书店</button>
+        <button class="gi-try-chip" type="button" data-p="极简风格的咖啡店 logo，干净线条，白色背景，扁平设计">极简咖啡店 logo</button>
+        <button class="gi-try-chip" type="button" data-p="秋天的大学校园，梧桐落叶、自行车和教学楼，水彩插画质感">秋天的校园</button>
+        <button class="gi-try-chip" type="button" data-p="深蓝夜空下的沙漠与银河，长曝光摄影风格，画面宁静">沙漠与银河</button>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<footer class="foot">
+  © 2026 吴宇飞 · 个人主页
+</footer>
+
+
+<script>
+/* 滚动到可视区域时淡入（纯装饰，不影响内容阅读） */
+document.documentElement.classList.add('js');
+(function(){
+  var items = document.querySelectorAll('.reveal');
+  if (!('IntersectionObserver' in window)) {
+    items.forEach(function(el){ el.classList.add('is-in'); });
+    return;
+  }
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if (e.isIntersecting) { e.target.classList.add('is-in'); io.unobserve(e.target); }
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
+  items.forEach(function(el){ io.observe(el); });
+})();
+</script>
+
+<script>
+/* ===================================================================
+   北京天气 · 调用 Open-Meteo 免费接口（https://open-meteo.com）
+   特点：无需注册、无需 API Key，直接 fetch 就能拿到 JSON
+   想换成别的城市：只改下面 LAT / LON 两个数字
+   =================================================================== */
+(function(){
+  var LAT = 39.9042, LON = 116.4074;   /* 北京 · 天安门 */
+  var URL = 'https://api.open-meteo.com/v1/forecast'
+          + '?latitude='  + LAT
+          + '&longitude=' + LON
+          + '&current=temperature_2m,relative_humidity_2m,is_day,weather_code'
+          + '&daily=temperature_2m_max,temperature_2m_min'
+          + '&timezone=Asia%2FShanghai&forecast_days=1';
+
+  var box     = document.getElementById('weather');
+  var icoEl   = document.getElementById('w-ico');
+  var tempEl  = document.getElementById('w-temp');
+  var descEl  = document.getElementById('w-desc');
+  var metaEl  = document.getElementById('w-meta');
+  var stampEl = document.getElementById('w-stamp');
+  var btn     = document.getElementById('w-refresh');
+  if (!box) return;
+
+  /* WMO 天气代码 → [中文描述, 图标类型] */
+  var WMO = {
+    0:['晴','sun'], 1:['大部晴朗','sun'], 2:['多云','partly'], 3:['阴','cloud'],
+    45:['有雾','fog'], 48:['雾凇','fog'],
+    51:['小毛毛雨','rain'], 53:['毛毛雨','rain'], 55:['大毛毛雨','rain'],
+    56:['冻毛毛雨','rain'], 57:['强冻毛毛雨','rain'],
+    61:['小雨','rain'], 63:['中雨','rain'], 65:['大雨','rain'],
+    66:['冻雨','rain'], 67:['强冻雨','rain'],
+    71:['小雪','snow'], 73:['中雪','snow'], 75:['大雪','snow'], 77:['米雪','snow'],
+    80:['阵雨','rain'], 81:['强阵雨','rain'], 82:['暴阵雨','rain'],
+    85:['阵雪','snow'], 86:['强阵雪','snow'],
+    95:['雷阵雨','storm'], 96:['雷阵雨伴冰雹','storm'], 99:['强雷阵雨伴冰雹','storm']
+  };
+
+  /* 下面这些是手写的线条小图标（和整站一样用主题色描边） */
+  var CLOUD    = 'M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z';
+  var CLOUD_UP = '<g transform="translate(0 -2.6)"><path d="' + CLOUD + '"/></g>';
+  var CLOUD_SM = '<g transform="translate(4 5.4) scale(.68)"><path d="' + CLOUD + '"/></g>';
+  var SUN      = '<circle cx="12" cy="12" r="4.3"/>'
+               + '<path d="M12 2.6v2.2M12 19.2v2.2M2.6 12h2.2M19.2 12h2.2'
+               +       'M5.1 5.1l1.6 1.6M17.3 17.3l1.6 1.6M18.9 5.1l-1.6 1.6M6.7 17.3l-1.6 1.6"/>';
+  var SUN_SM   = '<circle cx="8" cy="8" r="3"/>'
+               + '<path d="M8 2.6v1.3M2.6 8h1.3M4.2 4.2l.95.95M11.8 4.2l-.95.95M4.2 11.8l.95-.95"/>';
+  var MOON     = '<path d="M20.2 14.6A8.6 8.6 0 0 1 9.4 3.8a8.6 8.6 0 1 0 10.8 10.8z"/>';
+
+  function svg(inner){
+    return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" '
+         + 'stroke-linecap="round" stroke-linejoin="round">' + inner + '</svg>';
+  }
+  function icon(kind){
+    switch (kind){
+      case 'moon':
+        return svg(MOON);
+      case 'partly':                     /* 多云（白天）：太阳在后面，云在前面 */
+        return svg(SUN_SM + CLOUD_SM);
+      case 'partlyNight':
+        return svg('<g transform="translate(.4 .6) scale(.58)">' + MOON + '</g>' + CLOUD_SM);
+      case 'cloud':
+        return svg('<path d="' + CLOUD + '"/>');
+      case 'fog':
+        return svg(CLOUD_UP + '<path d="M7.6 18.4h8.8M6.2 21h10"/>');
+      case 'rain':
+        return svg(CLOUD_UP + '<path d="M9 18.6v2M12 18.6v2.6M15 18.6v2"/>');
+      case 'snow':
+        return svg(CLOUD_UP
+             + '<circle cx="9" cy="19.6" r="1.1" fill="currentColor" stroke="none"/>'
+             + '<circle cx="12" cy="21.2" r="1.1" fill="currentColor" stroke="none"/>'
+             + '<circle cx="15" cy="19.6" r="1.1" fill="currentColor" stroke="none"/>');
+      case 'storm':
+        return svg(CLOUD_UP + '<path d="M13 17.3 10.7 20.9h2.5l-.8 2" stroke-width="1.7"/>');
+      default:
+        return svg(SUN);
+    }
+  }
+
+  /* 请求数据：带 8 秒超时，失败也不影响页面其它内容 */
+  function load(){
+    box.classList.add('is-loading');
+    box.classList.remove('is-error');
+
+    var ctl   = ('AbortController' in window) ? new AbortController() : null;
+    var timer = ctl ? setTimeout(function(){ ctl.abort(); }, 8000) : null;
+
+    fetch(URL, { cache:'no-store', signal: ctl ? ctl.signal : undefined })
+      .then(function(res){
+        if (!res.ok) throw new Error('HTTP ' + res.status);
+        return res.json();
+      })
+      .then(function(data){ clearTimeout(timer); render(data); })
+      .catch(function(){ clearTimeout(timer); fail(); });
+  }
+
+  function render(data){
+    var cur = data.current || {}, day = data.daily || {};
+    var info = WMO[cur.weather_code] || ['—', 'cloud'];
+    var kind = info[1];
+    var night = (cur.is_day === 0);
+    if (night && kind === 'sun')    kind = 'moon';
+    if (night && kind === 'partly') kind = 'partlyNight';
+
+    icoEl.innerHTML = icon(kind);
+    tempEl.textContent = (typeof cur.temperature_2m === 'number')
+                       ? cur.temperature_2m.toFixed(1) : '--';
+    descEl.textContent = info[0];
+
+    var hi = day.temperature_2m_max ? day.temperature_2m_max[0] : null;
+    var lo = day.temperature_2m_min ? day.temperature_2m_min[0] : null;
+    var hu = cur.relative_humidity_2m;
+    var bits = [];
+    if (typeof hi === 'number') bits.push('最高 ' + Math.round(hi) + '°');
+    if (typeof lo === 'number') bits.push('最低 ' + Math.round(lo) + '°');
+    if (typeof hu === 'number') bits.push('湿度 ' + hu + '%');
+    metaEl.textContent = bits.join(' · ') || '数据来源：Open-Meteo';
+
+    stampEl.textContent = cur.time ? cur.time.slice(11, 16) + ' 更新' : '';
+    box.classList.remove('is-loading', 'is-error');
+  }
+
+  function fail(){
+    box.classList.remove('is-loading');
+    box.classList.add('is-error');
+    tempEl.textContent = '--';
+    descEl.textContent = '天气加载失败';
+    /* 有些浏览器（如 Safari）不允许 file:// 本地页面直接请求网络，
+       这种情况提示用本地服务器打开，比单纯说"失败"更好排查 */
+    metaEl.textContent = (location.protocol === 'file:')
+      ? '若是直接双击打开的，请改用本地服务器打开本页'
+      : '请检查网络后点刷新';
+    stampEl.textContent = '';
+  }
+
+  btn.addEventListener('click', load);
+  load();
+  setInterval(load, 10 * 60 * 1000);   /* 每 10 分钟自动更新一次 */
+})();
+</script>
+
+<script>
+/* ===================================================================
+   共用 · 找本地服务
+   -------------------------------------------------------------------
+   第三屏（去背景）和第四屏（文生图）都得先找到本机那个 server.js。
+   逻辑一模一样，就抽出来放在这儿，两边都调用它，免得以后改一处漏一处。
+
+   为什么不能只请求「页面自己的地址」：
+   页面可能是从别处打开的（编辑器预览面板、甚至双击 file://），
+   那时当前地址上根本没有 /api/health，必须再挨个问一遍本机的那几个端口。
+   =================================================================== */
+window.__wbLocalServer = (function(){
+  /* server.js 默认在 8787；端口被占用时会自动往后试到 8797，所以这一段都要问。 */
+  var PORTS = [8787, 8788, 8789, 8790, 8791, 8792, 8793, 8794, 8795, 8796, 8797];
+
+  function askHealth(base){
+    return fetch(base + '/api/health', { cache: 'no-store' })
+      .then(function(res){
+        if (!res.ok) throw new Error('HTTP ' + res.status);
+        return res.json();
+      })
+      .then(function(data){
+        /* 认脸：只有本项目的服务才会这样回答，别的静态服务吐出的 404 页面在这儿被挡掉 */
+        if (!data || data.ok !== true || !data.model) throw new Error('不是本项目的服务');
+        return data;
+      });
+  }
+
+  /* 找到就返回 { base, data }；base 为空串表示「就用页面自己的地址」 */
+  function find(){
+    return askHealth('').then(function(data){
+      return { base: '', data: data };
+    }, function(){
+      var i = 0;
+      function next(){
+        if (i >= PORTS.length) return Promise.reject(new Error('一个都没找到'));
+        var base = 'http://127.0.0.1:' + PORTS[i++];
+        return askHealth(base).then(function(data){
+          return { base: base, data: data };
+        }, next);
+      }
+      return next();
+    });
+  }
+
+  return { ports: PORTS, find: find };
+})();
+</script>
+
+<script>
+/* ===================================================================
+   第三屏 · 一键去除图片背景
+   -------------------------------------------------------------------
+   这里请求的不是 Replicate，而是本项目自己的本地服务 /api/remove-bg：
+
+     网页  ──POST 图片──▶  server.js  ──带 Key──▶  Replicate（lucataco/remove-bg）
+     网页  ◀──返回 PNG──  server.js  ◀──结果链接──  Replicate
+
+   Key 只存在服务端的环境变量 REPLICATE_API_TOKEN 里，前端拿不到、也泄露不了。
+   所以：用这个功能前要先启动服务（在项目文件夹执行 node server.js）。
+
+   页面从哪儿打开都行（本地服务地址、编辑器预览面板、甚至双击本文件），
+   脚本会自己去 127.0.0.1 上把那几个端口问一遍，找到服务就用它；
+   实在找不到，就在按钮下面把「该做什么」写清楚，而不是丢一个看不懂的 404。
+   =================================================================== */
+(function(){
+  var UPLOAD_LIMIT = 1.5 * 1024 * 1024;   /* 超过这个大小先在浏览器里压一压，传得快也更稳 */
+  var MAX_SIDE     = 1600;                /* 压缩后的最长边（像素） */
+  var MAX_PICK     = 12 * 1024 * 1024;    /* 本地服务能收的最大原图 */
+  var TIMEOUT_MS   = 3 * 60 * 1000;       /* 前端最多等 3 分钟 */
+
+  /* 端口范围和「怎么找服务」都放在页面顶部的共用脚本里（window.__wbLocalServer），
+     第四屏的文生图用的是同一份逻辑。 */
+  var apiBase     = '';     /* '' 表示「就用页面自己的地址」；否则是 http://127.0.0.1:端口 */
+  var serverReady = false;  /* 有没有找到本地服务 */
+  var tokenReady  = false;  /* 本地服务有没有读到 Key */
+  var warned      = false;  /* 状态栏上挂的是不是「连不上」这类提示 */
+
+  var card = document.getElementById('bg-card');
+  if (!card) return;
+
+  var drop     = document.getElementById('bg-drop');
+  var fileIn   = document.getElementById('bg-file');
+  var nameEl   = document.getElementById('bg-name');
+  var sizeEl   = document.getElementById('bg-size');
+  var noteEl   = document.getElementById('bg-note');
+  var resetBtn = document.getElementById('bg-reset');
+  var srcImg   = document.getElementById('bg-src');
+  var outImg   = document.getElementById('bg-out');
+  var emptyEl  = document.getElementById('bg-empty');
+  var runBtn   = document.getElementById('bg-run');
+  var runText  = document.getElementById('bg-run-text');
+  var spinEl   = document.getElementById('bg-spin');
+  var dlBtn    = document.getElementById('bg-download');
+  var statusEl = document.getElementById('bg-status');
+
+  var file = null;       /* 用户选中的原始文件 */
+  var srcUrl = '';       /* 原图预览用的临时地址 */
+  var outUrl = '';       /* 结果图的临时地址 */
+  var busy = false;
+  var dragDepth = 0;
+
+  /* ---------- 小工具 ---------- */
+  function setStatus(text, kind){
+    statusEl.textContent = text || '';
+    statusEl.className = 'status' + (kind ? ' is-' + kind : '');
+  }
+  function fmtSize(n){
+    return n >= 1024 * 1024
+      ? (n / 1024 / 1024).toFixed(1) + ' MB'
+      : Math.max(1, Math.round(n / 1024)) + ' KB';
+  }
+  function setBusy(on){
+    busy = on;
+    runBtn.disabled = on;
+    runBtn.classList.toggle('is-busy', on);
+    spinEl.hidden = !on;
+    runText.textContent = on ? '处理中…' : '去除背景';
+  }
+  function loadBitmap(f){
+    if ('createImageBitmap' in window){
+      return createImageBitmap(f, { imageOrientation: 'from-image' })
+        .catch(function(){ return createImageBitmap(f); });
+    }
+    return new Promise(function(resolve, reject){
+      var img = new Image(), u = URL.createObjectURL(f);
+      img.onload  = function(){ URL.revokeObjectURL(u); resolve(img); };
+      img.onerror = function(){ URL.revokeObjectURL(u); reject(new Error('读不出这张图片')); };
+      img.src = u;
+    });
+  }
+  function toBlob(cv, type, quality){
+    return new Promise(function(resolve){
+      try { cv.toBlob(function(b){ resolve(b); }, type, quality); }
+      catch (e) { resolve(null); }
+    });
+  }
+
+  /* ---------- 选图 ---------- */
+  function selectFile(f){
+    if (!f) return;
+    if (!/^image\//.test(f.type)){
+      setStatus('这个文件不是图片，请换 JPG / PNG / WebP。', 'error');
+      return;
+    }
+    if (f.size > MAX_PICK){
+      setStatus('这张图有 ' + fmtSize(f.size) + '，超过 ' + fmtSize(MAX_PICK) + ' 了，请先压缩一下。', 'error');
+      return;
+    }
+    file = f;
+    if (srcUrl) URL.revokeObjectURL(srcUrl);
+    srcUrl = URL.createObjectURL(f);
+    srcImg.src = srcUrl;
+
+    nameEl.textContent = f.name || '未命名图片';
+    sizeEl.textContent = fmtSize(f.size);
+    noteEl.textContent = f.size > UPLOAD_LIMIT ? '（上传前会自动压缩）' : '';
+    card.classList.add('is-ready');
+
+    clearResult();
+    setStatus('');
+  }
+
+  function clearResult(){
+    if (outUrl){ URL.revokeObjectURL(outUrl); outUrl = ''; }
+    outImg.removeAttribute('src');
+    emptyEl.hidden = false;
+    dlBtn.hidden = true;
+    dlBtn.removeAttribute('href');
+  }
+
+  /* ---------- 图片太大就先用 canvas 压一下 ---------- */
+  function shrink(f){
+    if (f.size <= UPLOAD_LIMIT) return Promise.resolve(null);   /* 够小，原图直传 */
+    return loadBitmap(f).then(function(bmp){
+      var scale = Math.min(1, MAX_SIDE / Math.max(bmp.width, bmp.height));
+      var w = Math.max(1, Math.round(bmp.width * scale));
+      var h = Math.max(1, Math.round(bmp.height * scale));
+      var cv = document.createElement('canvas');
+      cv.width = w; cv.height = h;
+      cv.getContext('2d').drawImage(bmp, 0, 0, w, h);
+      if (bmp.close) bmp.close();
+
+      /* 从高质量往低质量试，够小就停 */
+      var qualities = [0.92, 0.85, 0.75];
+      var i = 0, last = null;
+      function next(){
+        if (i >= qualities.length) return Promise.resolve(last);
+        var q = qualities[i++];
+        return toBlob(cv, 'image/jpeg', q).then(function(blob){
+          if (!blob) return next();
+          last = blob;
+          return blob.size <= UPLOAD_LIMIT ? blob : next();
+        });
+      }
+      return next().then(function(blob){
+        return blob ? { blob: blob, w: w, h: h } : null;
+      });
+    }).catch(function(){
+      return null;   /* 浏览器解不开（比如 iPhone 的 HEIC）就原图直传 */
+    });
+  }
+
+  /* ---------- 交给本地服务 ---------- */
+  function upload(blob){
+    var ctl = ('AbortController' in window) ? new AbortController() : null;
+    var timer = ctl ? setTimeout(function(){ ctl.abort(); }, TIMEOUT_MS) : null;
+
+    return fetch(apiBase + '/api/remove-bg', {
+      method: 'POST',
+      headers: { 'Content-Type': blob.type || 'application/octet-stream' },
+      body: blob,
+      signal: ctl ? ctl.signal : undefined
+    }).then(function(res){
+      clearTimeout(timer);
+      if (res.ok) return res.blob();
+      /* 出错时本地服务返回 {"error":"…"}，把这句话直接显示给用户看 */
+      return res.text().then(function(text){
+        var msg = '';
+        try { msg = (JSON.parse(text) || {}).error || ''; } catch (e) {}
+        throw new Error(msg || ('本地服务返回 HTTP ' + res.status));
+      });
+    }, function(err){
+      clearTimeout(timer);
+      if (err && err.name === 'AbortError') throw new Error('等太久了（超过 3 分钟），请重试或换张小一点的图。');
+      throw err;
+    });
+  }
+
+  /* ---------- 开始处理 ---------- */
+  function start(){
+    if (!file || busy) return;
+    setBusy(true);
+    dlBtn.hidden = true;
+    setStatus('正在检查本地服务…');
+
+    var t0 = Date.now();
+    ensureServer()
+      .then(function(){
+        setStatus('正在准备图片…');
+        return shrink(file);
+      })
+      .then(function(small){
+        if (small) noteEl.textContent = '（已压缩到 ' + small.w + '×' + small.h + '）';
+        setStatus('已提交给模型，正在处理，通常几秒钟…');
+        return upload(small ? small.blob : file);
+      })
+      .then(function(blob){
+        showResult(blob, Date.now() - t0);
+      })
+      .catch(function(err){
+        showError(err);
+      })
+      .then(function(){
+        setBusy(false);
+      });
+  }
+
+  function showResult(blob, ms){
+    if (outUrl) URL.revokeObjectURL(outUrl);
+    outUrl = URL.createObjectURL(blob);
+    outImg.src = outUrl;
+    emptyEl.hidden = true;
+
+    var base = (file && file.name ? file.name : 'image').replace(/\.[^.]+$/, '');
+    dlBtn.href = outUrl;
+    dlBtn.download = base + '-去背景.png';
+    dlBtn.hidden = false;
+
+    setStatus('完成，用时 ' + (ms / 1000).toFixed(1) + ' 秒 · 点「下载 PNG」保存', 'ok');
+  }
+
+  function showError(err){
+    var msg = (err && err.message) ? err.message : '出错了，请重试。';
+    /* fetch 直接失败：多半是服务中途被关掉了 */
+    var isNetwork = err instanceof TypeError || /Failed to fetch|NetworkError|Load failed/i.test(msg);
+    if (isNetwork){
+      serverReady = false;   /* 下次点按钮会重新找一遍，服务重启后不用刷新页面 */
+      msg = '和本地服务的连接断了。请确认 node server.js 还在运行（那个终端窗口别关），然后再点一次「去除背景」。';
+    }
+    setStatus(msg, 'error');
+  }
+
+  /* ---------- 事件：点击 / 键盘 / 拖拽 ---------- */
+  drop.addEventListener('click', function(){ fileIn.click(); });
+  drop.addEventListener('keydown', function(e){
+    if (e.key === 'Enter' || e.key === ' '){ e.preventDefault(); fileIn.click(); }
+  });
+  fileIn.addEventListener('change', function(){
+    selectFile(fileIn.files && fileIn.files[0]);
+    fileIn.value = '';   /* 清空，方便再次选同一个文件 */
+  });
+
+  /* 用 dragDepth 计数，避免拖过子元素时高亮一闪一闪 */
+  drop.addEventListener('dragenter', function(e){
+    e.preventDefault();
+    dragDepth++;
+    drop.classList.add('is-over');
+  });
+  drop.addEventListener('dragover', function(e){
+    e.preventDefault();
+    if (e.dataTransfer) e.dataTransfer.dropEffect = 'copy';
+  });
+  drop.addEventListener('dragleave', function(e){
+    e.preventDefault();
+    dragDepth = Math.max(0, dragDepth - 1);
+    if (!dragDepth) drop.classList.remove('is-over');
+  });
+  drop.addEventListener('drop', function(e){
+    e.preventDefault();
+    dragDepth = 0;
+    drop.classList.remove('is-over');
+    var dt = e.dataTransfer;
+    if (dt && dt.files && dt.files[0]) selectFile(dt.files[0]);
+  });
+  /* 防止把图片拖到页面其它地方时，浏览器直接打开这张图 */
+  ['dragover', 'drop'].forEach(function(type){
+    window.addEventListener(type, function(e){
+      if (card.contains(e.target)) return;
+      e.preventDefault();
+    });
+  });
+
+  resetBtn.addEventListener('click', function(){
+    if (busy) return;
+    file = null;
+    if (srcUrl){ URL.revokeObjectURL(srcUrl); srcUrl = ''; }
+    srcImg.removeAttribute('src');
+    clearResult();
+    card.classList.remove('is-ready');
+    nameEl.textContent = '—';
+    sizeEl.textContent = '';
+    noteEl.textContent = '';
+    setStatus('');
+  });
+
+  runBtn.addEventListener('click', start);
+
+  /* ---------- 找本地服务 ----------
+     此前这里只请求了当前地址上的 /api/health，而且「HTTP 404」被当成了正常返回，
+     结果页面要是从别处打开（编辑器预览面板等），点按钮只会得到一句
+     「本地服务返回 HTTP 404」，完全看不出该去哪儿修。
+     现在这套逻辑挪到了页面顶部的共用脚本里：先问页面自己的地址，
+     不是本项目的服务就依次问本机那几个端口；找到谁，后面的请求就发给谁。 */
+  function findServer(){
+    return window.__wbLocalServer.find();
+  }
+
+  /* 状态栏只在「状态变了」的时候动它，免得覆盖掉选图/处理中的提示 */
+  function syncStatus(){
+    if (!serverReady){
+      if (warned) return;
+      warned = true;
+      setStatus('还没连上本地服务。请在项目文件夹里启动它——执行 node server.js，或者双击「启动.command」——'
+        + '启动好之后直接点「去除背景」就行，不用刷新页面。', 'warn');
+    } else if (!tokenReady){
+      if (warned) return;
+      warned = true;
+      setStatus('本地服务连上了，但没读到 REPLICATE_API_TOKEN。请在 .env 里填好 Key 再重启服务（见 README.md）。', 'warn');
+    } else if (warned){
+      warned = false;
+      setStatus('');
+    }
+  }
+
+  function checkServer(){
+    return findServer().then(function(found){
+      apiBase     = found.base;
+      serverReady = true;
+      tokenReady  = found.data.hasToken !== false;
+      syncStatus();
+      return true;
+    }, function(){
+      apiBase     = '';
+      serverReady = false;
+      tokenReady  = false;
+      syncStatus();
+      return false;
+    });
+  }
+
+  /* 点按钮时调用：没连上就再找一次——刚刚才启动的服务，这一下就能连上 */
+  function ensureServer(){
+    if (serverReady) return Promise.resolve();
+    return checkServer().then(function(ok){
+      if (!ok){
+        throw new Error('没连上本地服务。请在项目文件夹里执行 node server.js（或双击「启动.command」），'
+          + '看到「服务已启动」之后，再点一次「去除背景」。');
+      }
+    });
+  }
+
+  /* ---------- 打开页面时先自查一下服务在不在、Key 配好没 ---------- */
+  checkServer();
+})();
+</script>
+
+<script>
+/* ===================================================================
+   第四屏 · AI 文字生成图片
+   -------------------------------------------------------------------
+   这里请求的也不是 OpenRouter，而是本项目自己的本地服务：
+
+     网页  ──POST {prompt, 比例, 质量, 张数}──▶  server.js
+     server.js  ──带 Key──▶  OpenRouter 的 /api/v1/images
+     server.js  ◀──{data:[{b64_json,…}]}──  OpenRouter
+     网页   ◀──{images:[{b64}]}──  server.js
+
+   Key 只存在服务端的环境变量 OPENROUTER_API_KEY 里，前端一行都碰不到。
+   所以用这个功能前，同样要先启动服务（在项目文件夹执行 node server.js）。
+   =================================================================== */
+(function(){
+  var shell = document.getElementById('gi-shell');
+  if (!shell) return;
+
+  var TIMEOUT_MS = 6 * 60 * 1000;   /* 服务端自身等 5 分钟，前端多留一点余量 */
+
+  var promptEl  = document.getElementById('gi-prompt');
+  var countEl   = document.getElementById('gi-count');
+  var runBtn    = document.getElementById('gi-run');
+  var runText   = document.getElementById('gi-run-text');
+  var spinEl    = document.getElementById('gi-spin');
+  var hintEl    = document.getElementById('gi-hint');
+  var metaEl    = document.getElementById('gi-meta');
+  var emptyEl   = document.getElementById('gi-empty');
+  var loadEl    = document.getElementById('gi-loading');
+  var loadText  = document.getElementById('gi-loading-text');
+  var gridEl    = document.getElementById('gi-grid');
+  var aspectBox = document.getElementById('gi-aspect');
+  var qualityBox= document.getElementById('gi-quality');
+  var nBox      = document.getElementById('gi-n');
+
+  var apiBase = '';
+  var serverReady = false;
+  var keyReady    = false;
+  var warned      = false;    /* 状态栏上挂的是不是「没连上服务」这类提示 */
+  var busy        = false;
+  var ticker      = null;
+  var shotUrls    = [];       /* 结果图的临时地址，换一批时记得释放 */
+
+  /* 和 HTML 里默认按下的那几个 chip 保持一致 */
+  var opts = { aspect: '1:1', quality: 'medium', n: 1 };
+
+  /* 不同质量档位大概要等多久——高清档确实很慢，先说明白，免得以为卡死了 */
+  var HINTS = {
+    low:    '快速档约 10 秒出图',
+    medium: '标准档约 20～40 秒出图',
+    high:   '高清档要 1～2 分钟，单张约 $0.13'
+  };
+
+  /* ---------- 小工具 ---------- */
+  function setMeta(text, kind){
+    metaEl.textContent = text || '';
+    metaEl.className = 'gi-meta' + (kind ? ' is-' + kind : '');
+  }
+  function showState(which){          /* 'empty' | 'loading' | 'result' */
+    emptyEl.hidden = which !== 'empty';
+    loadEl.hidden  = which !== 'loading';
+    gridEl.hidden  = which !== 'result';
+  }
+  function setBusy(on){
+    busy = on;
+    runBtn.disabled = on;
+    runBtn.classList.toggle('is-busy', on);
+    spinEl.hidden = !on;
+    runText.textContent = on ? '生成中…' : '生成图片';
+    if (on) startTicker(); else stopTicker();
+  }
+  /* 出图动辄一分钟，给个「已等待 N 秒」，让人知道没卡死 */
+  function startTicker(){
+    stopTicker();
+    var t0 = Date.now();
+    ticker = setInterval(function(){
+      var s = Math.round((Date.now() - t0) / 1000);
+      loadText.textContent = '正在生成…已等待 ' + s + ' 秒'
+        + (s > 60 ? '（高清档比较慢，请再等一会儿）' : '');
+    }, 1000);
+  }
+  function stopTicker(){
+    if (ticker){ clearInterval(ticker); ticker = null; }
+  }
+  function updateHint(){
+    var text = HINTS[opts.quality] || '';
+    if (opts.n > 1) text += '，' + opts.n + ' 张分别计费';
+    hintEl.textContent = text;
+  }
+  function b64ToBlob(b64, mime){
+    var bin = atob(b64);
+    var buf = new Uint8Array(bin.length);
+    for (var i = 0; i < bin.length; i++) buf[i] = bin.charCodeAt(i);
+    return new Blob([buf], { type: mime || 'image/png' });
+  }
+  function downloadName(text, idx){
+    var base = String(text || 'image')
+      .replace(/[\s\\/:*?"<>|]+/g, '-')
+      .replace(/^-+|-+$/g, '')
+      .slice(0, 24);
+    return (base || 'image') + '-' + idx + '.png';
+  }
+
+  /* ---------- 参数 chips ---------- */
+  function bindChips(box, key){
+    if (!box) return;
+    box.addEventListener('click', function(e){
+      var btn = e.target.closest ? e.target.closest('button[data-v]') : null;
+      if (!btn || busy) return;
+      Array.prototype.forEach.call(box.querySelectorAll('button[data-v]'), function(b){
+        b.setAttribute('aria-pressed', String(b === btn));
+      });
+      var v = btn.getAttribute('data-v');
+      opts[key] = (key === 'n') ? Number(v) : v;
+      updateHint();
+    });
+  }
+
+  /* ---------- 出图结果的展示与下载 ---------- */
+  function clearShots(){
+    shotUrls.forEach(function(u){ URL.revokeObjectURL(u); });
+    shotUrls = [];
+    gridEl.innerHTML = '';
+  }
+
+  function renderShots(images, promptText){
+    clearShots();
+    gridEl.setAttribute('data-count', String(Math.min(4, images.length)));
+
+    images.forEach(function(im, i){
+      var blob = b64ToBlob(im.b64, im.mediaType);
+      var url  = URL.createObjectURL(blob);
+      shotUrls.push(url);
+
+      var fig = document.createElement('figure');
+      fig.className = 'gi-shot';
+
+      var img = document.createElement('img');
+      img.src = url;
+      img.alt = 'AI 生成的第 ' + (i + 1) + ' 张图片';
+
+      var bar = document.createElement('div');
+      bar.className = 'gi-shot-bar';
+
+      var label = document.createElement('span');
+      label.textContent = '第 ' + (i + 1) + ' 张 · '
+        + String(im.mediaType || 'image/png').replace('image/', '').toUpperCase();
+
+      var save = document.createElement('a');
+      save.className = 'gi-save';
+      save.href = url;
+      save.download = downloadName(promptText, i + 1);
+      save.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor"'
+        + ' stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"'
+        + ' aria-hidden="true"><path d="M12 3.8v11.4M7.2 10.6 12 15.4l4.8-4.8M4.6 19.8h14.8"/></svg>'
+        + '<span>下载</span>';
+
+      bar.appendChild(label);
+      bar.appendChild(save);
+      fig.appendChild(img);
+      fig.appendChild(bar);
+      gridEl.appendChild(fig);
+    });
+  }
+
+  /* ---------- 交给本地服务 ---------- */
+  function requestImages(promptText){
+    var ctl = ('AbortController' in window) ? new AbortController() : null;
+    var timer = ctl ? setTimeout(function(){ ctl.abort(); }, TIMEOUT_MS) : null;
+
+    return fetch(apiBase + '/api/generate-image', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        prompt: promptText,
+        aspect_ratio: opts.aspect,
+        quality: opts.quality,
+        n: opts.n
+      }),
+      signal: ctl ? ctl.signal : undefined
+    }).then(function(res){
+      clearTimeout(timer);
+      return res.text().then(function(text){
+        var data = null;
+        try { data = JSON.parse(text); } catch (e) { /* 不是 JSON 就按状态码报错 */ }
+        if (!res.ok){
+          throw new Error((data && data.error) || ('本地服务返回 HTTP ' + res.status));
+        }
+        if (!data || !data.images || !data.images.length){
+          throw new Error('服务没有返回图片，请再试一次。');
+        }
+        return data;
+      });
+    }, function(err){
+      clearTimeout(timer);
+      if (err && err.name === 'AbortError'){
+        throw new Error('等太久了（超过 6 分钟），已经取消。可以降低质量档位或把提示词写短一点再试。');
+      }
+      throw err;
+    });
+  }
+
+  /* ---------- 开始生成 ---------- */
+  function start(){
+    if (busy) return;
+
+    var promptText = promptEl.value.trim();
+    if (!promptText){
+      setMeta('请先写一句你想要的画面，再点「生成图片」。', 'error');
+      promptEl.focus();
+      return;
+    }
+
+    setBusy(true);
+    showState('loading');
+    loadText.textContent = '正在生成…已等待 0 秒';
+    setMeta('正在检查本地服务…');
+
+    ensureServer()
+      .then(function(){
+        setMeta('已提交给模型，正在生成，请稍等…');
+        return requestImages(promptText);
+      })
+      .then(function(data){
+        renderShots(data.images, promptText);
+        showState('result');
+        setMeta(
+          '完成：' + data.images.length + ' 张 · 用时 ' + (data.elapsedMs / 1000).toFixed(1)
+          + ' 秒 · 花费 $' + Number(data.costUsd || 0).toFixed(4)
+          + ' · 模型 ' + data.model,
+          'ok'
+        );
+      })
+      .catch(function(err){
+        showState('empty');
+        showError(err);
+      })
+      .then(function(){
+        setBusy(false);   /* 放在最后，无论成功失败都要把按钮恢复 */
+      });
+  }
+
+  function showError(err){
+    var msg = (err && err.message) ? err.message : '出错了，请再试一次。';
+    var isNetwork = (err instanceof TypeError)
+      || /Failed to fetch|NetworkError|Load failed/i.test(msg);
+    if (isNetwork){
+      serverReady = false;   /* 下次点按钮会重新找一遍，服务重启后不用刷新页面 */
+      msg = '和本地服务的连接断了。请确认 node server.js 还在运行（那个终端窗口别关），然后再点一次「生成图片」。';
+    }
+    setMeta(msg, 'error');
+  }
+
+  /* ---------- 服务状态自查 ---------- */
+  function syncMeta(){
+    if (!serverReady){
+      if (warned) return;
+      warned = true;
+      setMeta('还没连上本地服务。请在项目文件夹里启动它——执行 node server.js，'
+        + '或者双击「启动.command」——启动好之后直接点「生成图片」就行，不用刷新页面。', 'warn');
+    } else if (!keyReady){
+      if (warned) return;
+      warned = true;
+      setMeta('本地服务连上了，但没读到 OPENROUTER_API_KEY。请在 .env 里填好这个 Key 再重启服务（见 README.md）。', 'warn');
+    } else if (warned){
+      warned = false;
+      setMeta('');
+    }
+  }
+
+  function checkServer(){
+    return window.__wbLocalServer.find().then(function(found){
+      apiBase     = found.base;
+      serverReady = true;
+      keyReady    = found.data.hasOpenRouterToken !== false;
+      syncMeta();
+      return true;
+    }, function(){
+      apiBase = ''; serverReady = false; keyReady = false;
+      syncMeta();
+      return false;
+    });
+  }
+
+  function ensureServer(){
+    if (serverReady) return Promise.resolve();
+    return checkServer().then(function(found){
+      if (!found){
+        throw new Error('没连上本地服务。请在项目文件夹里执行 node server.js（或双击「启动.command」），'
+          + '看到「服务已启动」之后，再点一次「生成图片」。');
+      }
+    });
+  }
+
+  /* ---------- 事件 ---------- */
+  bindChips(aspectBox, 'aspect');
+  bindChips(qualityBox, 'quality');
+  bindChips(nBox, 'n');
+  updateHint();
+
+  promptEl.addEventListener('input', function(){
+    countEl.textContent = String(promptEl.value.length);
+    promptEl.style.height = 'auto';                                  /* 跟着内容长高 */
+    promptEl.style.height = Math.min(200, promptEl.scrollHeight) + 'px';
+  });
+  /* 提示词可以换行，所以用 Cmd/Ctrl + Enter 触发生成 */
+  promptEl.addEventListener('keydown', function(e){
+    if ((e.metaKey || e.ctrlKey) && e.key === 'Enter'){ e.preventDefault(); start(); }
+  });
+
+  runBtn.addEventListener('click', start);
+
+  Array.prototype.forEach.call(shell.querySelectorAll('.gi-try-chip'), function(chip){
+    chip.addEventListener('click', function(){
+      if (busy) return;
+      promptEl.value = chip.getAttribute('data-p') || '';
+      promptEl.dispatchEvent(new Event('input'));
+      promptEl.focus();
+      setMeta('');
+    });
+  });
+
+  /* ---------- 打开页面时先自查一下服务在不在、Key 配好没 ---------- */
+  checkServer();
+})();
+</script>
+
+</body>
+</html>
